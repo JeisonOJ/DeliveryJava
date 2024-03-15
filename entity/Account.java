@@ -1,22 +1,22 @@
 package entity;
 
 public class Account {
-    private String name;
+    private String username;
     private String password;
     private String role;
 
-    public Account(String name, String password, String role) {
-        this.name = name;
+    public Account(String username, String password, String role) {
+        this.username = username;
         this.password = password;
         this.role = role;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
