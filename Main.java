@@ -1,5 +1,10 @@
+import controller.AuthController;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("hola mundo");
+        AuthController auth = new AuthController();
+        auth.createAnAccount();
+        auth.showUsers();
+        auth.loginUser();
     }
 }

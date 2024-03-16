@@ -1,11 +1,11 @@
 package entity;
 
 public class DeliveryMan extends User{
-    private double salary;
+    private String vehicle;
 
-    public DeliveryMan(String username, String password, String role, int id, String name, double salary) {
+    public DeliveryMan(String username, String password, String role, int id, String name, String vehicle) {
         super(username, password, role, id, name);
-        this.salary = salary;
+        this.vehicle = vehicle;
     }
 
     @Override
