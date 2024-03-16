@@ -6,5 +6,7 @@ public class Main {
         auth.createAnAccount();
         auth.showUsers();
         auth.loginUser();
+        auth.logOut();
+
     }
 }

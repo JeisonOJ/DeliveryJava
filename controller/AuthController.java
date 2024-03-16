@@ -10,9 +10,11 @@ import java.util.ArrayList;
 public class AuthController {
 
     private ArrayList<User> usersList;
+    private boolean userLogged;
 
     public AuthController() {
         usersList = new ArrayList<>();
+        userLogged =false;
     }
 
     public void createAnAccount() {
@@ -83,32 +85,36 @@ public class AuthController {
     }
 
     public void loginUser(){
-        boolean success = false;
+
         String username;
         String password;
         do {
+            if (userLogged){
+                JOptionPane.showMessageDialog(null,"You have already logged in");
+                break;
+            }
             username = JOptionPane.showInputDialog(null, "Enter your username(Account)");
             password = JOptionPane.showInputDialog(null, "Enter your password");
             if (username == null || password == null){
                 break;
             }
             for (User user: usersList){
-                System.out.println(user.getUsername());
-                System.out.println(username);
-                System.out.println(user.getPassword());
-                System.out.println(password);
                 if (user.getUsername().equalsIgnoreCase(username)){
                     if (user.getPassword().equalsIgnoreCase(password)){
-                        success = true;
+                        userLogged = true;
                         JOptionPane.showMessageDialog(null,"Welcome: "+username);
                         break;
                     }
                 }
             }
-            if (!success){
+            if (!userLogged){
                 JOptionPane.showMessageDialog(null,"Invalid credentials");
             }
-        }while (!success);
+        }while (!userLogged);
+    }
+    public void logOut(){
+        userLogged = !userLogged;
+        JOptionPane.showMessageDialog(null,"You have logged out successfully");
     }
 
 }
