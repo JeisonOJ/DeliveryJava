@@ -17,8 +17,4 @@ public class DeliveryMan extends User{
         this.vehicle = vehicle;
     }
 
-    @Override
-    public void showOrders() {
-
-    }
 }

@@ -111,6 +111,8 @@ public class AuthController {
             if (userLogged) {
                 JOptionPane.showMessageDialog(null, "You have already logged in");
                 break;
+            }else{
+                JOptionPane.showMessageDialog(null, "Load user...");
             }
             username = JOptionPane.showInputDialog(null, "Enter your username(Account)");
             password = JOptionPane.showInputDialog(null, "Enter your password");

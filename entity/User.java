@@ -10,8 +10,6 @@ public abstract class User extends Account{
         this.name = name;
     }
 
-    public abstract void showOrders();
-
     public int getId() {
         return id;
     }
