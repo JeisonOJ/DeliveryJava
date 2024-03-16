@@ -3,9 +3,12 @@ package entity;
 public class Account {
     private String username;
     private String password;
-    private String role;
+    public enum Role{
+        CLIENT, DELIVERYMAN
+    }
+    private Role role;
 
-    public Account(String username, String password, String role) {
+    public Account(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -27,11 +30,11 @@ public class Account {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 }

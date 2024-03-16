@@ -4,7 +4,7 @@ public abstract class User extends Account{
     private int id;
     private String name;
 
-    public User(String username, String password, String role, int id, String name) {
+    public User(String username, String password, Role role, int id, String name) {
         super(username, password, role);
         this.id = id;
         this.name = name;

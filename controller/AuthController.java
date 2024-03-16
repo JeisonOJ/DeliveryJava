@@ -1,5 +1,6 @@
 package controller;
 
+import entity.Account;
 import entity.Client;
 import entity.DeliveryMan;
 import entity.User;
@@ -11,10 +12,27 @@ public class AuthController {
 
     private ArrayList<User> usersList;
     private boolean userLogged;
+    private User user;
 
     public AuthController() {
         usersList = new ArrayList<>();
-        userLogged =false;
+        userLogged = false;
+    }
+
+    public boolean isUserLogged() {
+        return userLogged;
+    }
+
+    public void setUserLogged(boolean userLogged) {
+        this.userLogged = userLogged;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void createAnAccount() {
@@ -39,7 +57,7 @@ public class AuthController {
             switch (optionInt) {
                 case 1:
                     try {
-                        String role = "DeliveryMan";
+                        Account.Role role = Account.Role.DELIVERYMAN;
                         String username = JOptionPane.showInputDialog(null, "Enter your username(Account)");
                         String password = JOptionPane.showInputDialog(null, "Enter your password");
                         int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter your identification"));
@@ -56,7 +74,7 @@ public class AuthController {
                     break;
                 case 2:
                     try {
-                        String role = "Client";
+                        Account.Role role = Account.Role.CLIENT;
                         String username = JOptionPane.showInputDialog(null, "Enter your username(Account)");
                         String password = JOptionPane.showInputDialog(null, "Enter your password");
                         int id = Integer.parseInt(JOptionPane.showInputDialog(null, "Enter your identification"));
@@ -76,45 +94,49 @@ public class AuthController {
         } while (optionInt != 3);
 
     }
-    public void showUsers(){
-        String message = "";
-        for (User user: usersList){
-            message += "Name: "+user.getName()+" Role: "+user.getRole()+"\n";
+
+    public void showUsers() {
+        StringBuilder message = new StringBuilder();
+        for (User user : usersList) {
+            message.append("Name: ").append(user.getName()).append(" Role: ").append(user.getRole()).append("\n");
         }
-        JOptionPane.showMessageDialog(null,message);
+        JOptionPane.showMessageDialog(null, message.toString());
     }
 
-    public void loginUser(){
+    public void loginUser() {
 
         String username;
         String password;
         do {
-            if (userLogged){
-                JOptionPane.showMessageDialog(null,"You have already logged in");
+            if (userLogged) {
+                JOptionPane.showMessageDialog(null, "You have already logged in");
                 break;
             }
             username = JOptionPane.showInputDialog(null, "Enter your username(Account)");
             password = JOptionPane.showInputDialog(null, "Enter your password");
-            if (username == null || password == null){
+            if (username == null || password == null) {
                 break;
             }
-            for (User user: usersList){
-                if (user.getUsername().equalsIgnoreCase(username)){
-                    if (user.getPassword().equalsIgnoreCase(password)){
+            for (User user : usersList) {
+                if (user.getUsername().equalsIgnoreCase(username)) {
+                    if (user.getPassword().equalsIgnoreCase(password)) {
                         userLogged = true;
-                        JOptionPane.showMessageDialog(null,"Welcome: "+username);
+                        this.user = user;
+                        JOptionPane.showMessageDialog(null, "Welcome: " + username);
                         break;
                     }
                 }
             }
-            if (!userLogged){
-                JOptionPane.showMessageDialog(null,"Invalid credentials");
+            if (!userLogged) {
+                JOptionPane.showMessageDialog(null, "Invalid credentials");
             }
-        }while (!userLogged);
+        } while (!userLogged);
     }
-    public void logOut(){
+
+    public void logOut() {
         userLogged = !userLogged;
-        JOptionPane.showMessageDialog(null,"You have logged out successfully");
+        user = null;
+        JOptionPane.showMessageDialog(null, "You have logged out successfully");
     }
 
 }
