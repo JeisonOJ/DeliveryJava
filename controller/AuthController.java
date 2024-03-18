@@ -6,7 +6,10 @@ import entity.DeliveryMan;
 import entity.User;
 
 import javax.swing.*;
+import java.beans.JavaBean;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AuthController {
 
@@ -66,8 +69,15 @@ public class AuthController {
                         if (username == null || password == null || name == null || vehicle == null) {
                             break;
                         }
-                        User userDeliveryMan = new DeliveryMan(username, password, role, id, name, vehicle);
-                        usersList.add(userDeliveryMan);
+                        if (validatePassword(password)) {
+                            User userDeliveryMan = new DeliveryMan(username, password, role, id, name, vehicle);
+                            addUserList(userDeliveryMan);
+                        } else {
+                            JOptionPane.showMessageDialog(null, """
+                                    The password must meet the following criteria:
+                                    contain both uppercase and lowercase letters, include numbers, and include special characters.
+                                    """);
+                        }
                     } catch (Exception exception) {
                         JOptionPane.showMessageDialog(null, "Invalid data\n" + exception);
                     }
@@ -83,8 +93,11 @@ public class AuthController {
                         if (username == null || password == null || name == null || address == null) {
                             break;
                         }
-                        User userClient = new Client(username, password, role, id, name, address);
-                        usersList.add(userClient);
+                        if (validatePassword(password)) {
+                            User userClient = new Client(username, password, role, id, name, address);
+                            addUserList(userClient);
+                        }
+
                     } catch (Exception exception) {
                         JOptionPane.showMessageDialog(null, "Invalid data\n" + exception);
                     }
@@ -103,6 +116,34 @@ public class AuthController {
         JOptionPane.showMessageDialog(null, message.toString());
     }
 
+    public User searchUserByUserName(String username) {
+        if (!usersList.isEmpty()) {
+            for (User user : usersList) {
+                if (user.getUsername().equalsIgnoreCase(username)) {
+                    return user;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void addUserList(User user) {
+        if (searchUserByUserName(user.getUsername()) == null) {
+            usersList.add(user);
+            JOptionPane.showMessageDialog(null, "User registered successfully!");
+        } else {
+            JOptionPane.showMessageDialog(null, "User already exist in database");
+        }
+    }
+
+    public boolean validatePassword(String password) {
+        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{4,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(password);
+        return matcher.matches();
+
+    }
+
     public void loginUser() {
 
         String username;
@@ -111,7 +152,7 @@ public class AuthController {
             if (userLogged) {
                 JOptionPane.showMessageDialog(null, "You have already logged in");
                 break;
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Load user...");
             }
             username = JOptionPane.showInputDialog(null, "Enter your username(Account)");
